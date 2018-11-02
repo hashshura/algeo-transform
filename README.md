@@ -8,8 +8,6 @@ Done to fulfill IF2123 Geometric Algebra's Big Mission (or whatever Tugas Besar 
 Edit this README.md if you have already fulfilled the task.
 * Translate -- Ricky
 * Rotate -- Ricky
-* Reflect -- Ridwan
-* Stretch -- Ridwan
 * Custom -- Asif
 * Reset -- Asif
 * Sample 3D Model -- Ridwan

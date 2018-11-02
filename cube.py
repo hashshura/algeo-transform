@@ -2,6 +2,7 @@ from OpenGL.GL import *
 from OpenGL.GLUT import *
 from OpenGL.GLU import *
 import sys
+import math
 
 Z_TRANSLATE = -2000.0 # To translate into viewport
 
@@ -112,6 +113,7 @@ def showCmds():
     print("Type \"stretch p v\" to stretch the polygon (p = x/y/z) (v = float)")
     print("Type \"reflect p\" to reflect the polygon (p = x/x=-y/etc)")
     print("Type \"translate dx dy dz\" to translate the polygon (dx,dy,dz = float)")
+    print("Type \"rotate r p a b\" or \"rotate r p a b c\" to rotate the polygon (r = float) (p = x/y/z) (a,b,c = float)")
     print("Type any command below:")
     print(">> ",end='',flush=True)
     
@@ -247,6 +249,31 @@ def translate(delta):
         newpoint[2] = point[2] + dz
         newpoints += [newpoint]
     points = newpoints
+
+def rotate(deg, param, titikpusat):
+    deg = float(deg)
+    a = float(titikpusat[0])
+    b = float(titikpusat[1])
+    c = float(titikpusat[2])
+    rad = math.radians(deg)
+    global points
+    newpoints = []
+    for point in points:
+        newpoint = point[:]
+        if (param == 'x'):
+            newpoint[0] = point[0] - a
+            newpoint[1] = (point[1] - b)*math.cos(rad) - (point[2] - c)*math.sin(rad)
+            newpoint[2] = (point[1] - b)*math.sin(rad) + (point[2] - c)*math.cos(rad)
+        elif (param == 'y'):
+            newpoint[0] = (point[0] - a)*math.cos(rad) + (point[2] - c)*math.sin(rad)
+            newpoint[1] = point[1] - b
+            newpoint[2] = -1*(point[0] - a)*math.sin(rad) + (point[1] - b)*math.cos(rad)
+        elif (param == 'z'):
+            newpoint[0] = (point[0] - a)*math.cos(rad) - (point[1] - b)*math.sin(rad)
+            newpoint[1] = (point[0] - a)*math.sin(rad) + (point[1] - b)*math.cos(rad)
+            newpoint[2] = point[2] - c
+        newpoints += [newpoint]
+    points = newpoints
     
 def doCmd(cmds):
     #cmds[0] = kata pertama
@@ -264,6 +291,7 @@ def doCmd(cmds):
         if cmds[0] == "stretch": stretch(cmds[1], cmds[2])
         if cmds[0] == "reflect": reflect(cmds[1])
         if cmds[0] == "translate": translate(cmds[1:])
+        if cmds[0] == "rotate": rotate(cmds[1], cmds[2], cmds[3:])
     except IndexError:
         print("\nPlease input the correct number of parameters!")
     except ValueError:

@@ -57,6 +57,7 @@ def showCmds():
     print("Type \"shear p v\" to shear the polygon (p = x/y/z) (v = float)")
     print("Type \"stretch p v\" to stretch the polygon (p = x/y/z) (v = float)")
     print("Type \"reflect p\" to reflect the polygon (p = x/x=-y/etc)")
+    print("Type \"translate dx dy dz\" to translate the polygon (dx,dy,dz = float)")
     print("Type any command below:")
     print(">> ",end='',flush=True)
     
@@ -176,6 +177,23 @@ def reflect(param):
         newpoints += [[num[0], num[1], num[2]]]
     points = newpoints
 
+def translate(delta):
+    dx = float(delta[0])
+    dy = float(delta[1])
+    try:
+        dz = float(delta[2])
+    except IndexError:
+        dz = 0.0
+    global points
+    newpoints = []
+    for point in points:
+        newpoint = point[:]
+        newpoint[0] = point[0] + dx
+        newpoint[1] = point[1] + dy
+        newpoint[2] = point[2] + dz
+        newpoints += [newpoint]
+    points = newpoints
+    
 def doCmd(cmds):
     #cmds[0] = kata pertama
     #cmds[1] = kata kedua, dst
@@ -191,6 +209,7 @@ def doCmd(cmds):
         if cmds[0] == "reset": reset()
         if cmds[0] == "stretch": stretch(cmds[1], cmds[2])
         if cmds[0] == "reflect": reflect(cmds[1])
+        if cmds[0] == "translate": translate(cmds[1:])
     except IndexError:
         print("\nPlease input the correct number of parameters!")
     except ValueError:

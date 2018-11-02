@@ -273,7 +273,10 @@ def rotate(deg, param, titikpusat):
     deg = float(deg)
     a = float(titikpusat[0])
     b = float(titikpusat[1])
-    c = float(titikpusat[2])
+    try:
+        c = float(titikpusat[2])
+    except IndexError:
+        c = 0.0
     rad = math.radians(deg)
     global points
     newpoints = []

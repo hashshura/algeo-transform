@@ -31,7 +31,61 @@ def ReSizeGLScene(Width, Height):
     glLoadIdentity()
     gluPerspective(45, float(Width)/float(Height), 0.1, 2 * Z_TRANSLATE)
     glMatrixMode(GL_MODELVIEW)
+'''
+def Sample3DModel():
+    global points
 
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)    
+    glLoadIdentity()
+    glTranslatef(0.0,0.0,Z_TRANSLATE) 
+    glBegin(GL_QUADS)                 
+
+    points = [[100,100,100],[100,100,-100],[100,-100,100],[100,-100,-100],[-100,100,100],[-100,100,-100],[-100,-100,100],[-100,-100,-100]]
+
+    #Sisi 1
+    glColor3f(0,1,0)            
+    glVertex3f(points[0][0],points[0][1],points[0][2])        
+    glVertex3f(points[1][0],points[1][1],points[1][2])
+    glVertex3f(points[3][0],points[3][1],points[3][2])
+    glVertex3f(points[2][0],points[2][1],points[2][2])
+
+    #Sisi 2
+    glColor3f(0,1,0)            
+    glVertex3f(points[0][0],points[0][1],points[0][2])        
+    glVertex3f(points[1][0],points[1][1],points[1][2])
+    glVertex3f(points[5][0],points[5][1],points[5][2])
+    glVertex3f(points[4][0],points[4][1],points[4][2])
+
+    #Sisi 3
+    glColor3f(0,1,0)            
+    glVertex3f(points[0][0],points[0][1],points[0][2])        
+    glVertex3f(points[2][0],points[2][1],points[2][2])
+    glVertex3f(points[6][0],points[6][1],points[6][2])
+    glVertex3f(points[4][0],points[4][1],points[4][2])
+
+    #Sisi 4
+    glColor3f(0,1,0)            
+    glVertex3f(points[2][0],points[2][1],points[2][2])        
+    glVertex3f(points[3][0],points[3][1],points[3][2])
+    glVertex3f(points[6][0],points[6][1],points[6][2])
+    glVertex3f(points[7][0],points[7][1],points[7][2])
+
+    #Sisi 5
+    glColor3f(0,1,0)            
+    glVertex3f(points[4][0],points[4][1],points[4][2])        
+    glVertex3f(points[5][0],points[5][1],points[5][2])
+    glVertex3f(points[7][0],points[7][1],points[7][2])
+    glVertex3f(points[6][0],points[6][1],points[6][2])
+
+    #Sisi 6
+    glColor3f(0,1,0)            
+    glVertex3f(points[1][0],points[1][1],points[1][2])        
+    glVertex3f(points[3][0],points[3][1],points[3][2])
+    glVertex3f(points[7][0],points[7][1],points[7][2])
+    glVertex3f(points[5][0],points[5][1],points[5][2])  
+    glEnd()                                        
+    glutSwapBuffers()
+'''
 def DrawGLScene():
     global points
 

@@ -115,6 +115,8 @@ def stretch(param, value):
 def reflect(param):
     global points
     newpoints = []
+    if (param[0] == '('):
+        param = ''.join(param[1:-1]).split(',')
     for point in points:
         num = point
         if (param == 'x'):
@@ -137,10 +139,11 @@ def reflect(param):
             num[1] = swap
             num[2] = -num[2]
         else:
-            param = param[1:-1].split(',')
+            num[0] = float(param[0])*2 - num[0]
+            num[1] = float(param[1])*2 - num[1]
+            num[2] = float(param[2])*2 - num[2]
         newpoints += [[num[0], num[1], num[2]]]
     points = newpoints
-
 
 def doCmd(cmds):
     #cmds[0] = kata pertama

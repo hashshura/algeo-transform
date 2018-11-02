@@ -22,8 +22,8 @@ Edit this README.md if you have already fulfilled the task.
 * To install the dependencies, execute:
 ``` bash
 chillax> python get-pip.py 
-chillax> pip install PyOpenGL-3.1.2-cp37-cp37m-win32.whl 
-chillax> pip install PyOpenGL_accelerate-3.1.2-cp37-cp37m-win32.whl
+chillax> pip install C:\Your Directory\PyOpenGL-3.1.2-cp37-cp37m-win32.whl 
+chillax> pip install C:\Your Directory\PyOpenGL_accelerate-3.1.2-cp37-cp37m-win32.whl
 ```
 * To run the program, execute:
 ``` bash

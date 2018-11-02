@@ -11,7 +11,7 @@ points = []
 points_backup = []
 
 def InitGL(Width, Height):                
-    glClearColor(0, 0, 0, 0.0)    
+    glClearColor(1, 1, 1, 0.0)    
     glClearDepth(1.0)                   
     glDepthFunc(GL_LESS)                
     glEnable(GL_DEPTH_TEST)
@@ -32,7 +32,7 @@ def ReSizeGLScene(Width, Height):
     glLoadIdentity()
     gluPerspective(45, float(Width)/float(Height), 0.1, 2 * Z_TRANSLATE)
     glMatrixMode(GL_MODELVIEW)
-'''
+
 def Sample3DModel():
     global points
 
@@ -86,7 +86,7 @@ def Sample3DModel():
     glVertex3f(points[5][0],points[5][1],points[5][2])  
     glEnd()                                        
     glutSwapBuffers()
-'''
+
 def DrawGLScene():
     global points
 
@@ -96,19 +96,23 @@ def DrawGLScene():
     glBegin(GL_POLYGON)
     
     for point in points:
-        glColor3f(0.75,0.75,0.75)
+        glColor3f(0.4,0.4,1)
         glVertex3f(point[0], point[1], point[2])
     
     glEnd()                 
     glBegin(GL_LINES)
     for i in range(-35,35):    
-        glColor3f(1,1,1)
+        glColor3f(0.7,0.7,0.7)
         if (i == 0):
             glColor3f(1,0,0)
+        elif (i%5 == 0):
+            glColor3f(0,0,0)
         glVertex3f(2000,i*50,0)
         glVertex3f(-2000,i*50,0)
         if (i == 0):
             glColor3f(0,1,0)
+        elif (i%5 == 0):
+            glColor3f(0,0,0)
         glVertex3f(i*50,-2000,0)
         glVertex3f(i*50,2000,0)
 
@@ -307,6 +311,7 @@ def doCmd(cmds):
         elif cmds[0] == "reflect": reflect(cmds[1])
         elif cmds[0] == "translate": translate(cmds[1:])
         elif cmds[0] == "rotate": rotate(cmds[1], cmds[2], cmds[3:])
+        elif cmds[0] == "3D": Sample3DModel()
         else: print("\nCommand !found")
     except IndexError:
         print("\nPlease input the correct number of parameters!")

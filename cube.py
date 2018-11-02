@@ -7,6 +7,7 @@ Z_TRANSLATE = -2000.0 # To translate into viewport
 
 window = 0
 points = []
+points_backup = []
 
 def InitGL(Width, Height):                
     glClearColor(0, 0, 0, 0.0)    
@@ -56,21 +57,23 @@ def showCmds():
     print("Type any command below:")
     print(">> ",end='',flush=True)
     
-def addLine(line):
-    global points
-    newline = []
-    newline = newline + [float(line[0])]
-    newline = newline + [float(line[1])]
+def addPoint(point):
+    global points, points_backup
+    newpoint = []
+    newpoint = newpoint + [float(point[0])]
+    newpoint = newpoint + [float(point[1])]
     try:
-        newline = newline + [float(line[2])]
+        newpoint = newpoint + [float(point[2])]
     except IndexError:
-        newline = newline + [0]
+        newpoint = newpoint + [0]
     
-    points = points + [newline]
+    points = points + [newpoint]
+    points_backup = points[:]
 
-def delLine():
-    global points
+def delPoint():
+    global points, points_backup
     points = points[:-1]
+    points_backup = points[:]
 
 def dilate(multiplier):
     global points
@@ -83,11 +86,11 @@ def dilate(multiplier):
     points = newpoints
     
 def shear(param, value):
-    value = float(value)
     global points
+    value = float(value)
     newpoints = []
     for point in points:
-        num = point
+        num = point[:]
         if (param == 'x'):
             num[0] += value*num[1] + value*num[2]
         if (param == 'y'):
@@ -97,6 +100,31 @@ def shear(param, value):
         newpoints += [[num[0], num[1], num[2]]]
     points = newpoints
     
+def custom(matrix):
+    global points
+    newpoints = []
+    try:
+        _ = float(matrix[4])
+        for point in points:
+            newpoint = []
+            newpoint += [point[0]*float(matrix[0]) + point[1]*float(matrix[1]) + point[2]*float(matrix[2])]
+            newpoint += [point[0]*float(matrix[3]) + point[1]*float(matrix[4]) + point[2]*float(matrix[5])]
+            newpoint += [point[0]*float(matrix[6]) + point[1]*float(matrix[7]) + point[2]*float(matrix[8])]
+            newpoints += [newpoint]
+        points = newpoints
+    except IndexError:
+        for point in points:
+            newpoint = []
+            newpoint += [point[0]*float(matrix[0]) + point[1]*float(matrix[1])]
+            newpoint += [point[0]*float(matrix[2]) + point[1]*float(matrix[3])]
+            newpoint += [0.0]
+            newpoints += [newpoint]
+        points = newpoints
+
+def reset():
+    global points, points_backup
+    points = points_backup[:]
+
 def doCmd(cmds):
     #cmds[0] = kata pertama
     #cmds[1] = kata kedua, dst
@@ -104,10 +132,12 @@ def doCmd(cmds):
         if cmds[0] == "exit": exit()
         if cmds[0] == "stop": exit()
         if cmds[0] == "quit": exit()
-        if cmds[0] == "del": delLine()
-        if cmds[0] == "add": addLine(cmds[1:]) # cmds[1:] = tail of cmds
+        if cmds[0] == "del": delPoint()
+        if cmds[0] == "add": addPoint(cmds[1:]) # cmds[1:] = tail of cmds
         if cmds[0] == "dilate": dilate(cmds[1])
         if cmds[0] == "shear": shear(cmds[1], cmds[2])
+        if cmds[0] == "custom": custom(cmds[1:])
+        if cmds[0] == "reset": reset()
     except IndexError:
         print("\nPlease input the correct number of parameters!")
     except ValueError:

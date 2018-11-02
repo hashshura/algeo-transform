@@ -96,11 +96,26 @@ def DrawGLScene():
     glBegin(GL_POLYGON)
     
     for point in points:
-        glColor3f(1,1,1)
+        glColor3f(0.75,0.75,0.75)
         glVertex3f(point[0], point[1], point[2])
     
     glEnd()                 
-    
+    glBegin(GL_LINES)
+    for i in range(-35,35):    
+        glColor3f(1,1,1)
+        if (i == 0):
+            glColor3f(1,0,0)
+        glVertex3f(2000,i*50,0)
+        glVertex3f(-2000,i*50,0)
+        if (i == 0):
+            glColor3f(0,1,0)
+        glVertex3f(i*50,-2000,0)
+        glVertex3f(i*50,2000,0)
+
+    glColor3f(0,0,1)
+    glVertex3f(0,0,-2000)
+    glVertex3f(0,0,2000)
+    glEnd()
     glutSwapBuffers()
 
 def showCmds():
@@ -280,18 +295,19 @@ def doCmd(cmds):
     #cmds[1] = kata kedua, dst
     try:
         if cmds[0] == "exit": exit()
-        if cmds[0] == "stop": exit()
-        if cmds[0] == "quit": exit()
-        if cmds[0] == "del": delPoint()
-        if cmds[0] == "add": addPoint(cmds[1:]) # cmds[1:] = tail of cmds
-        if cmds[0] == "dilate": dilate(cmds[1])
-        if cmds[0] == "shear": shear(cmds[1], cmds[2])
-        if cmds[0] == "custom": custom(cmds[1:])
-        if cmds[0] == "reset": reset()
-        if cmds[0] == "stretch": stretch(cmds[1], cmds[2])
-        if cmds[0] == "reflect": reflect(cmds[1])
-        if cmds[0] == "translate": translate(cmds[1:])
-        if cmds[0] == "rotate": rotate(cmds[1], cmds[2], cmds[3:])
+        elif cmds[0] == "stop": exit()
+        elif cmds[0] == "quit": exit()
+        elif cmds[0] == "del": delPoint()
+        elif cmds[0] == "add": addPoint(cmds[1:]) # cmds[1:] = tail of cmds
+        elif cmds[0] == "dilate": dilate(cmds[1])
+        elif cmds[0] == "shear": shear(cmds[1], cmds[2])
+        elif cmds[0] == "custom": custom(cmds[1:])
+        elif cmds[0] == "reset": reset()
+        elif cmds[0] == "stretch": stretch(cmds[1], cmds[2])
+        elif cmds[0] == "reflect": reflect(cmds[1])
+        elif cmds[0] == "translate": translate(cmds[1:])
+        elif cmds[0] == "rotate": rotate(cmds[1], cmds[2], cmds[3:])
+        else: print("\nCommand !found")
     except IndexError:
         print("\nPlease input the correct number of parameters!")
     except ValueError:

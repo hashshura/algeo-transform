@@ -5,18 +5,21 @@ Done to fulfill IF2123 Geometric Algebra's Big Mission (or whatever Tugas Besar 
 
 ## Current To-Do's:
 
-* Translate
-* Rotate
-* Reflect
-* Stretch
-* Custom
-* Reset
-* Sample 3D Model
-* Animate 'em all
+Edit this README.md if you have already fulfilled the task.
+* Translate -- Ricky
+* Rotate -- Ricky
+* Reflect -- Ridwan
+* Stretch -- Ridwan
+* Custom -- Asif
+* Reset -- Asif
+* Sample 3D Model -- Ridwan
+* Animate 'em all -- All
 
 ## Later To-Do's:
-* Add x-y-z axis vectors
-* Modularize source code
+
+Edit this README.md if you have already fulfilled the task.
+* Add x-y-z axis vectors -- Ricky
+* Modularize source code -- Asif
 
 ## Installation and Running
 * Make sure that Python 3.7 is already installed on your computer

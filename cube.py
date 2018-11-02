@@ -52,8 +52,11 @@ def showCmds():
     print("Type \"exit\", \"stop\", or \"quit\" to quit the program")
     print("Type \"add x y z\" or \"add x y\" to add a point to the graph")
     print("Type \"del\" to delete last inputted point")
+    print("Type \"reset\" to reset any operations done after adding or deleting a point")
     print("Type \"dilate v\" to scale the polygon (v = float)")
     print("Type \"shear p v\" to shear the polygon (p = x/y/z) (v = float)")
+    print("Type \"stretch p v\" to stretch the polygon (p = x/y/z) (v = float)")
+    print("Type \"reflect p\" to reflect the polygon (p = x/x=-y/etc)")
     print("Type any command below:")
     print(">> ",end='',flush=True)
     
@@ -125,6 +128,54 @@ def reset():
     global points, points_backup
     points = points_backup[:]
 
+def stretch(param, value):
+    value = float(value)
+    global points
+    newpoints = []
+    for point in points:
+        num = point[:]
+        if (param == 'x'):
+            num[0] = num[0]*value
+        if (param == 'y'):
+            num[1] = num[1]*value
+        if (param == 'z'):
+            num[2] =num[2]*value
+        newpoints += [[num[0], num[1], num[2]]]
+    points = newpoints
+
+def reflect(param):
+    global points
+    newpoints = []
+    if (param[0] == '('):
+        param = ''.join(param[1:-1]).split(',')
+    for point in points:
+        num = point[:]
+        if (param == 'x'):
+            num[1] = -num[1]
+            num[2] = -num[2]
+        elif (param == 'y'):
+            num[0] = -num[0]
+            num[2] = -num[2]
+        elif (param == 'z'):
+            num[0] = -num[0]
+            num[1] = -num[1]
+        elif (param == 'y=x'):
+            swap = num[0]
+            num[0] = num[1]
+            num[1] = swap
+            num[2] = -num[2]
+        elif (param == 'y=-x'):
+            swap = -num[0]
+            num[0] = -num[1]
+            num[1] = swap
+            num[2] = -num[2]
+        else:
+            num[0] = float(param[0])*2 - num[0]
+            num[1] = float(param[1])*2 - num[1]
+            num[2] = float(param[2])*2 - num[2]
+        newpoints += [[num[0], num[1], num[2]]]
+    points = newpoints
+
 def doCmd(cmds):
     #cmds[0] = kata pertama
     #cmds[1] = kata kedua, dst
@@ -138,6 +189,8 @@ def doCmd(cmds):
         if cmds[0] == "shear": shear(cmds[1], cmds[2])
         if cmds[0] == "custom": custom(cmds[1:])
         if cmds[0] == "reset": reset()
+        if cmds[0] == "stretch": stretch(cmds[1], cmds[2])
+        if cmds[0] == "reflect": reflect(cmds[1])
     except IndexError:
         print("\nPlease input the correct number of parameters!")
     except ValueError:

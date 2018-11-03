@@ -6,8 +6,6 @@ Done to fulfill IF2123 Geometric Algebra's Big Mission (or whatever Tugas Besar 
 ## Current To-Do's:
 
 Edit this README.md if you have already fulfilled the task.
-* Translate -- Ricky
-* Rotate -- Ricky
 * Sample 3D Model -- Ridwan
 * Animate 'em all -- All
 

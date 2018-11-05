@@ -168,12 +168,13 @@ def DrawGLScene():
     #glTranslatef(0.0,0.0,Z_TRANSLATE)
     if (toggleMode):
         Ex = -2*dim*math.sin(th)*math.cos(ph)
-        Ey = math.abs(2*dim*math.sin(ph))
-        Ez = math.abs(2*dim*math.sin(th)*math.cos(ph))
+        Ey = +(2*dim*math.sin(ph))
+        Ez = +(2*dim*math.sin(th)*math.cos(ph))
         gluLookAt(Ex,Ey,Ez , 0,0,0 , 0,math.cos(ph),0)
     else:
         glRotatef(ph,1,0,0)
         glRotatef(th,0,1,0)
+        
     if (dimension == "2D"):
         DrawPolygon()
     elif (dimension == "3D"):

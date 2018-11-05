@@ -3,6 +3,7 @@ from OpenGL.GLUT import *
 from OpenGL.GLU import *
 import sys
 import math
+import os
 
 Z_TRANSLATE = -2000.0 # To translate into viewport
 
@@ -10,21 +11,38 @@ window = 0
 points = []
 points_backup = []
 
-def InitGL(Width, Height):                
-    glClearColor(1, 1, 1, 0.0)    
-    glClearDepth(1.0)                   
-    glDepthFunc(GL_LESS)                
+dimension = ""
+dim = 3.0
+toggleAxes = 1
+toggleValues = 1
+toggleMode = 0
+th = 0.0
+ph = 0.0
+fov = 55
+cmd = ""
+
+def InitGL(Width, Height):
+    global fov,dim      
+    glClearColor(1, 1, 1, 0.0)
+    glClearDepth(1.0)            
+    glDepthFunc(GL_LESS)          
     glEnable(GL_DEPTH_TEST)
     glPolygonMode(GL_FRONT, GL_FILL)    
     glPolygonMode(GL_BACK, GL_FILL)     
-    glShadeModel(GL_SMOOTH)                
+    glShadeModel(GL_SMOOTH)           
     glMatrixMode(GL_PROJECTION)
-    glLoadIdentity()                   
-    gluPerspective(45, float(Width)/float(Height), 0.1, 2 * Z_TRANSLATE)
+    glLoadIdentity()
+    if (toggleMode):                   
+        gluPerspective(fov,float(Width)/float(Height), dim/4, 2*Z_TRANSLATE)
+    else:
+        specialhere = dim*300
+        glOrtho(-specialhere*float(Width)/float(Height), +specialhere*float(Width)/float(Height),-specialhere,+specialhere, -specialhere, +specialhere)
+
     glMatrixMode(GL_MODELVIEW)
+    glLoadIdentity()
 
 def ReSizeGLScene(Width, Height):
-    if Height == 0:                       
+    if Height == 0:                     
         Height = 1
 
     glViewport(0, 0, Width, Height)
@@ -33,16 +51,70 @@ def ReSizeGLScene(Width, Height):
     gluPerspective(45, float(Width)/float(Height), 0.1, 2 * Z_TRANSLATE)
     glMatrixMode(GL_MODELVIEW)
 
-def Sample3DModel():
+def DrawAxes():
+    #Draw XY Cartesian Area
+    glBegin(GL_LINES)
+    
+    for i in range(-40,40):
+        #XY    
+        glColor3f(0.7,0.7,0.7)
+        if (i != 0):
+            if (i%5 == 0):
+                glColor3f(0,0,0)
+            glVertex3f(2000,i*50,0)
+            glVertex3f(-2000,i*50,0)
+        if (i != 0):
+            if (i%5 == 0):
+                glColor3f(0,0,0)
+            glVertex3f(i*50,-2000,0)
+            glVertex3f(i*50,2000,0)
+        #XZ
+        if (i != 0):
+            if (i%5 == 0):
+                glColor3f(0,0,0)
+            glVertex3f(2000,0,i*50)
+            glVertex3f(-2000,0,i*50)
+        if (i != 0):
+            if (i%5 == 0):
+                glColor3f(0,0,0)
+            glVertex3f(i*50,0,-2000)
+            glVertex3f(i*50,0,2000)
+        #YZ
+        if (i != 0):
+            if (i%5 == 0):
+                glColor3f(0,0,0)
+            glVertex3f(0,2000,i*50)
+            glVertex3f(0,-2000,i*50)
+        if (i != 0):
+            if (i%5 == 0):
+                glColor3f(0,0,0)
+            glVertex3f(0,i*50,-2000)
+            glVertex3f(0,i*50,2000)
+    
+    glColor3f(0,1,0)
+    glVertex3f(2000,0,0)
+    glVertex3f(-2000,0,0)
+
+    glColor3f(1,0,0)
+    glVertex3f(0,2000,0)
+    glVertex3f(0,-200,0)
+
+    glColor3f(0,0,1)
+    glVertex3f(0,0,2000)
+    glVertex3f(0,0,-2000)
+
+    glEnd()
+
+def DrawPolygon():
     global points
+    glBegin(GL_POLYGON)
+    for point in points:
+        glColor3f(0.4,0.4,1)
+        glVertex3f(point[0], point[1], point[2])
+    glEnd()
 
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)    
-    glLoadIdentity()
-    glTranslatef(0.0,0.0,Z_TRANSLATE) 
+def Sample3DModel():
     glBegin(GL_QUADS)                 
-
-    points = [[100,100,100],[100,100,-100],[100,-100,100],[100,-100,-100],[-100,100,100],[-100,100,-100],[-100,-100,100],[-100,-100,-100]]
-
     #Sisi 1
     glColor3f(0,1,0)            
     glVertex3f(points[0][0],points[0][1],points[0][2])        
@@ -51,75 +123,63 @@ def Sample3DModel():
     glVertex3f(points[2][0],points[2][1],points[2][2])
 
     #Sisi 2
-    glColor3f(0,1,0)            
+    glColor3f(1,0,0)            
     glVertex3f(points[0][0],points[0][1],points[0][2])        
     glVertex3f(points[1][0],points[1][1],points[1][2])
     glVertex3f(points[5][0],points[5][1],points[5][2])
     glVertex3f(points[4][0],points[4][1],points[4][2])
 
     #Sisi 3
-    glColor3f(0,1,0)            
+    glColor3f(0,0,1)            
     glVertex3f(points[0][0],points[0][1],points[0][2])        
     glVertex3f(points[2][0],points[2][1],points[2][2])
     glVertex3f(points[6][0],points[6][1],points[6][2])
     glVertex3f(points[4][0],points[4][1],points[4][2])
 
     #Sisi 4
-    glColor3f(0,1,0)            
+    glColor3f(1,1,0)            
     glVertex3f(points[2][0],points[2][1],points[2][2])        
     glVertex3f(points[3][0],points[3][1],points[3][2])
-    glVertex3f(points[6][0],points[6][1],points[6][2])
     glVertex3f(points[7][0],points[7][1],points[7][2])
+    glVertex3f(points[6][0],points[6][1],points[6][2])
 
     #Sisi 5
-    glColor3f(0,1,0)            
+    glColor3f(0,1,1)            
     glVertex3f(points[4][0],points[4][1],points[4][2])        
     glVertex3f(points[5][0],points[5][1],points[5][2])
     glVertex3f(points[7][0],points[7][1],points[7][2])
     glVertex3f(points[6][0],points[6][1],points[6][2])
 
     #Sisi 6
-    glColor3f(0,1,0)            
+    glColor3f(1,0,1)            
     glVertex3f(points[1][0],points[1][1],points[1][2])        
     glVertex3f(points[3][0],points[3][1],points[3][2])
     glVertex3f(points[7][0],points[7][1],points[7][2])
     glVertex3f(points[5][0],points[5][1],points[5][2])  
-    glEnd()                                        
-    glutSwapBuffers()
+    glEnd()                                   
 
 def DrawGLScene():
-    global points
+    global th,ph,dim,dimension
 
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)    
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)   
+    glEnable(GL_DEPTH_TEST) 
+
     glLoadIdentity()
-    glTranslatef(0.0,0.0,Z_TRANSLATE)        
-    glBegin(GL_POLYGON)
-    
-    for point in points:
-        glColor3f(0.4,0.4,1)
-        glVertex3f(point[0], point[1], point[2])
-    
-    glEnd()                 
-    glBegin(GL_LINES)
-    for i in range(-35,35):    
-        glColor3f(0.7,0.7,0.7)
-        if (i == 0):
-            glColor3f(1,0,0)
-        elif (i%5 == 0):
-            glColor3f(0,0,0)
-        glVertex3f(2000,i*50,0)
-        glVertex3f(-2000,i*50,0)
-        if (i == 0):
-            glColor3f(0,1,0)
-        elif (i%5 == 0):
-            glColor3f(0,0,0)
-        glVertex3f(i*50,-2000,0)
-        glVertex3f(i*50,2000,0)
-
-    glColor3f(0,0,1)
-    glVertex3f(0,0,-2000)
-    glVertex3f(0,0,2000)
-    glEnd()
+    #glTranslatef(0.0,0.0,Z_TRANSLATE)
+    if (toggleMode):
+        Ex = -2*dim*math.sin(th)*math.cos(ph)
+        Ey = math.abs(2*dim*math.sin(ph))
+        Ez = math.abs(2*dim*math.sin(th)*math.cos(ph))
+        gluLookAt(Ex,Ey,Ez , 0,0,0 , 0,math.cos(ph),0)
+    else:
+        glRotatef(ph,1,0,0)
+        glRotatef(th,0,1,0)
+    if (dimension == "2D"):
+        DrawPolygon()
+    elif (dimension == "3D"):
+        Sample3DModel()
+    DrawAxes()
+    glFlush()
     glutSwapBuffers()
 
 def showCmds():
@@ -298,6 +358,7 @@ def rotate(deg, param, titikpusat):
     points = newpoints
     
 def doCmd(cmds):
+    global toggleAxes,toggleMode,toggleValues,fov,dim
     #cmds[0] = kata pertama
     #cmds[1] = kata kedua, dst
     try:
@@ -315,17 +376,25 @@ def doCmd(cmds):
         elif cmds[0] == "translate": translate(cmds[1:])
         elif cmds[0] == "rotate": rotate(cmds[1], cmds[2], cmds[3:])
         elif cmds[0] == "3D": Sample3DModel()
+        elif (cmds[0] == 'a' or cmds[0] == 'A'): toggleAxes = 1-toggleAxes
+        elif (cmds[0] == 'v' or cmds[0] == 'V'): toggleValues = 1-toggleValues
+        elif (cmds[0] == 'm' or cmds[0] == 'M'): toggleMode = 1-toggleMode
+        #Change field of view angle */
+        elif cmds[0] == '-': fov -= 1
+        elif cmds[0] == '+': fov += 1
+        #hange dimensions */
+        elif cmds[0] == 'D': dim += 0.1
+        elif cmds[0] == 'd' and dim>1: dim -= 0.1
         else: print("\nCommand !found")
     except IndexError:
         print("\nPlease input the correct number of parameters!")
     except ValueError:
         print("\nPlease input valid values!")
     
-cmd = ""
 def keyPressed(*args):
-    global rquad, cmd
+    global cmd, th, ph
     chr = args[0].decode("utf-8")
-    
+
     if args[0] == b'\x08':
         print(chr,end='',flush=True)
         print(' ',end='',flush=True)
@@ -345,19 +414,55 @@ def keyPressed(*args):
         cmd = ""
         print(">> ",end='',flush=True)
 
+    InitGL(1080,720)
+    glutPostRedisplay()
+
+def keySpecial(key, x, y):
+    global th,ph
+    if (key == GLUT_KEY_RIGHT): th += 5
+    elif (key == GLUT_KEY_LEFT): th -= 5
+    elif (key == GLUT_KEY_UP): ph += 5
+    elif (key == GLUT_KEY_DOWN): ph -= 5
+
+    th = th%360
+    ph = ph%360
+
+    InitGL(1080,720)
+    glutPostRedisplay()
+
 def main():
     global window
     glutInit()
-    glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH)
+    glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH)
     glutInitWindowSize(1080, 720)
-    glutInitWindowPosition(0, 0)
-    window = glutCreateWindow(b"Cube")
+    #glutInitWindowPosition(0, 0)
+    window = glutCreateWindow(b"Tugas Besar Aljabar Geometri 2")
+
     glutDisplayFunc(DrawGLScene)
     glutIdleFunc(DrawGLScene)
     glutReshapeFunc(ReSizeGLScene)
     glutKeyboardFunc(keyPressed)
-    InitGL(1080, 720)
+    glutSpecialFunc(keySpecial)
+    #InitGL(1080, 720)
     glutMainLoop()
-    
+
+def WelcomeScreen():
+    global dimension
+    global points
+    os.system('cls')
+    print("\t\t\t Selamat Datang")
+    print("\t\t\t Di Aplikasi Tugas Besar 2")
+    print("\t\t\t IF 2123 Aljabar Geometri")
+    dimension = input("Silahkan pilih, antara '2D' atau '3D' : ")
+    while ((dimension != "3D") and (dimension != "2D")):
+        dimension = input("Masukan input yang tepat : ")
+    else:
+        print("Anda memasukan %s", dimension)
+    if (dimension == "3D"):
+        print("Blah")
+        points = [[100,100,100],[100,100,-100],[100,-100,100],[100,-100,-100],[-100,100,100],[-100,100,-100],[-100,-100,100],[-100,-100,-100]]
+        points_backup = points
+
+WelcomeScreen()
 showCmds()
 main()

@@ -283,17 +283,17 @@ def rotate(deg, param, titikpusat):
     for point in points:
         newpoint = point[:]
         if (param == 'x'):
-            newpoint[0] = point[0] - a
-            newpoint[1] = (point[1] - b)*math.cos(rad) - (point[2] - c)*math.sin(rad)
-            newpoint[2] = (point[1] - b)*math.sin(rad) + (point[2] - c)*math.cos(rad)
+            newpoint[0] = point[0]
+            newpoint[1] = (point[1] - b)*math.cos(rad) - (point[2] - c)*math.sin(rad) + b
+            newpoint[2] = (point[1] - b)*math.sin(rad) + (point[2] - c)*math.cos(rad) + c
         elif (param == 'y'):
-            newpoint[0] = (point[0] - a)*math.cos(rad) + (point[2] - c)*math.sin(rad)
-            newpoint[1] = point[1] - b
-            newpoint[2] = -1*(point[0] - a)*math.sin(rad) + (point[1] - b)*math.cos(rad)
+            newpoint[0] = (point[0] - a)*math.cos(rad) + (point[2] - c)*math.sin(rad) + a
+            newpoint[1] = point[1]
+            newpoint[2] = -1*(point[0] - a)*math.sin(rad) + (point[1] - b)*math.cos(rad) + c
         elif (param == 'z'):
-            newpoint[0] = (point[0] - a)*math.cos(rad) - (point[1] - b)*math.sin(rad)
-            newpoint[1] = (point[0] - a)*math.sin(rad) + (point[1] - b)*math.cos(rad)
-            newpoint[2] = point[2] - c
+            newpoint[0] = (point[0] - a)*math.cos(rad) - (point[1] - b)*math.sin(rad) + a
+            newpoint[1] = (point[0] - a)*math.sin(rad) + (point[1] - b)*math.cos(rad) + b
+            newpoint[2] = point[2]
         newpoints += [newpoint]
     points = newpoints
     

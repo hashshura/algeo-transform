@@ -9,6 +9,7 @@ dimension = ""
 
 def showCmds():
 <<<<<<< HEAD
+<<<<<<< HEAD
     print("Type \"reset\" to reset any operations done after adding or deleting a point")
     if dimension == "2D":
         print("Type \"add x y\" to add a point to the graph")
@@ -29,6 +30,8 @@ def showCmds():
     print("Type \"dilate v\" to scale the polygon (v = float)")
     print("Type \"exit\", \"stop\", or \"quit\" to quit the program")
 =======
+=======
+>>>>>>> fa11711d339607761d2aaf3ae71d51bb0990d9c1
     print()
     print(" Type \"exit\", \"stop\", or \"quit\" to quit the program")
     print(" Type \"add x y z\" or \"add x y\" to add a point to the graph")
@@ -49,6 +52,9 @@ def showCmds():
     print(" Type \"custom a b c d\" (2x2) or \"custom a b c d e f g h i\" (3x3) to execute custom transformation matrix")
     print()
     print("Make sure that your mouse pointer focus is on the GLUT window.")
+<<<<<<< HEAD
+>>>>>>> fa11711d339607761d2aaf3ae71d51bb0990d9c1
+=======
 >>>>>>> fa11711d339607761d2aaf3ae71d51bb0990d9c1
     print("Type any command below:")
     print(">> ",end='',flush=True)
@@ -57,6 +63,7 @@ def welcomeScreen():
     global s, dimension
     
     os.system('cls')
+<<<<<<< HEAD
 <<<<<<< HEAD
     print("\t\t\t Selamat Datang")
     print("\t\t\t Di Aplikasi Tugas Besar 2")
@@ -67,6 +74,8 @@ def welcomeScreen():
     else:
         print("Anda memilih ", dimension)
 =======
+=======
+>>>>>>> fa11711d339607761d2aaf3ae71d51bb0990d9c1
     
     print("________________/\\\\\\________________/\\\\\\\\\\\\_____/\\\\\\\\\\\\_________________________________        ")
     print(" _______________\\/\\\\\\_______________\\////\\\\\\____\\////\\\\\\_________________________________       ")
@@ -86,6 +95,9 @@ def welcomeScreen():
         dimension = input('Please enter valid input ("2D" or "3D"): ')
     else:
         print("Your input is " + dimension)
+<<<<<<< HEAD
+>>>>>>> fa11711d339607761d2aaf3ae71d51bb0990d9c1
+=======
 >>>>>>> fa11711d339607761d2aaf3ae71d51bb0990d9c1
     if (dimension == "3D"):
         s.points = [[100,100,100],[100,100,-100],[100,-100,100],[100,-100,-100],[-100,100,100],[-100,100,-100],[-100,-100,100],[-100,-100,-100]]

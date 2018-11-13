@@ -34,7 +34,7 @@ class Renderer:
             "f3": 0
         }
         
-    def UpdatePoints(self):
+    def Animate(self):
         if self.updater["ctr"] < 60:
             self.updater["ctr"] += 1
             if self.updater["op"] == "dilate":
@@ -202,7 +202,7 @@ class Renderer:
         glEnd()                                   
 
     def DrawGLScene(self):
-        self.UpdatePoints()
+        self.Animate()
     
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)   
         glEnable(GL_DEPTH_TEST) 

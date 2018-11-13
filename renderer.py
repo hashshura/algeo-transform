@@ -40,15 +40,7 @@ class Renderer:
             if self.updater["op"] == "dilate":
                 self.shape.points = self.shape.points_before[:]
                 f = 1 + ((self.updater["f"] - 1)/60 * self.updater["ctr"])
-<<<<<<< HEAD
-<<<<<<< HEAD
                 self.shape.dilate(f1)
-=======
-                self.shape.dilate(f)
->>>>>>> fa11711d339607761d2aaf3ae71d51bb0990d9c1
-=======
-                self.shape.dilate(f)
->>>>>>> fa11711d339607761d2aaf3ae71d51bb0990d9c1
             elif self.updater["op"] == "translate":
                 self.shape.points = self.shape.points_before[:]
                 f1 = self.updater["f1"]/60 * self.updater["ctr"]
@@ -106,8 +98,6 @@ class Renderer:
     def DrawAxes(self):
         #Draw XY Cartesian Area
         glBegin(GL_LINES)
-<<<<<<< HEAD
-<<<<<<< HEAD
         for i in range(-40,40):
             #XY
             if (self.dimension == "2D"):    
@@ -136,39 +126,6 @@ class Renderer:
                     glVertex3f(i*50,0,2000)
             #YZ
             '''
-=======
-=======
->>>>>>> fa11711d339607761d2aaf3ae71d51bb0990d9c1
-        
-        for i in range(-40,40):
-            #XY    
-            glColor3f(0.7,0.7,0.7)
-            if (i != 0):
-                if (i%5 == 0):
-                    glColor3f(0,0,0)
-                glVertex3f(2000,i*50,0)
-                glVertex3f(-2000,i*50,0)
-            if (i != 0):
-                if (i%5 == 0):
-                    glColor3f(0,0,0)
-                glVertex3f(i*50,-2000,0)
-                glVertex3f(i*50,2000,0)
-            #XZ
-            if (i != 0):
-                if (i%5 == 0):
-                    glColor3f(0,0,0)
-                glVertex3f(2000,0,i*50)
-                glVertex3f(-2000,0,i*50)
-            if (i != 0):
-                if (i%5 == 0):
-                    glColor3f(0,0,0)
-                glVertex3f(i*50,0,-2000)
-                glVertex3f(i*50,0,2000)
-            #YZ
-<<<<<<< HEAD
->>>>>>> fa11711d339607761d2aaf3ae71d51bb0990d9c1
-=======
->>>>>>> fa11711d339607761d2aaf3ae71d51bb0990d9c1
             if (i != 0):
                 if (i%5 == 0):
                     glColor3f(0,0,0)
@@ -179,42 +136,24 @@ class Renderer:
                     glColor3f(0,0,0)
                 glVertex3f(0,i*50,-2000)
                 glVertex3f(0,i*50,2000)
-<<<<<<< HEAD
-<<<<<<< HEAD
             '''
-=======
-        
->>>>>>> fa11711d339607761d2aaf3ae71d51bb0990d9c1
-=======
-        
->>>>>>> fa11711d339607761d2aaf3ae71d51bb0990d9c1
         glColor3f(0,1,0)
         glVertex3f(2000,0,0)
         glVertex3f(-2000,0,0)
 
         glColor3f(1,0,0)
         glVertex3f(0,2000,0)
-<<<<<<< HEAD
-<<<<<<< HEAD
         glVertex3f(0,-2000,0)
 
         if (self.dimension == "3D"):
             glColor3f(0,0,1)
             glVertex3f(0,0,2000)
             glVertex3f(0,0,-2000)
-=======
-=======
->>>>>>> fa11711d339607761d2aaf3ae71d51bb0990d9c1
         glVertex3f(0,-200,0)
 
         glColor3f(0,0,1)
         glVertex3f(0,0,2000)
         glVertex3f(0,0,-2000)
-
-<<<<<<< HEAD
->>>>>>> fa11711d339607761d2aaf3ae71d51bb0990d9c1
-=======
->>>>>>> fa11711d339607761d2aaf3ae71d51bb0990d9c1
         glEnd()
 
     def DrawPolygon(self):
@@ -290,17 +229,7 @@ class Renderer:
             self.DrawPolygon()
         elif (self.dimension == "3D"):
             self.Sample3DModel()
-<<<<<<< HEAD
-<<<<<<< HEAD
         self.DrawAxes()
-=======
-        if (self.toggleAxes == 1):
-            self.DrawAxes()
->>>>>>> fa11711d339607761d2aaf3ae71d51bb0990d9c1
-=======
-        if (self.toggleAxes == 1):
-            self.DrawAxes()
->>>>>>> fa11711d339607761d2aaf3ae71d51bb0990d9c1
         self.InitGL(1080,720)
         glutPostRedisplay()
         
@@ -356,16 +285,6 @@ class Renderer:
         glutIdleFunc(self.DrawGLScene)
         glutReshapeFunc(self.ReSizeGLScene)
         glutKeyboardFunc(self.keyPressed)
-<<<<<<< HEAD
-<<<<<<< HEAD
         if (self.dimension == "3D"):
             glutSpecialFunc(self.keySpecial)
-=======
-        glutSpecialFunc(self.keySpecial)
-        #InitGL(1080, 720)
->>>>>>> fa11711d339607761d2aaf3ae71d51bb0990d9c1
-=======
-        glutSpecialFunc(self.keySpecial)
-        #InitGL(1080, 720)
->>>>>>> fa11711d339607761d2aaf3ae71d51bb0990d9c1
         glutMainLoop()

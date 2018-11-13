@@ -1,3 +1,5 @@
+import math
+
 class Shape:
     
     def __init__(self):
@@ -161,19 +163,48 @@ class Shape:
         #cmds[1] = kata kedua, dst
         cmds = renderer.cmds
         try:
+            self.points_before = self.points[:]
+            renderer.updater["op"] = renderer.cmds[0]
+            
             if cmds[0] == "exit": exit()
             elif cmds[0] == "stop": exit()
             elif cmds[0] == "quit": exit()
             elif cmds[0] == "del": self.delPoint()
             elif cmds[0] == "add": self.addPoint(cmds[1:]) # cmds[1:] = tail of cmds
-            elif cmds[0] == "dilate": self.dilate(cmds[1])
-            elif cmds[0] == "shear": self.shear(cmds[1], cmds[2])
+            elif cmds[0] == "dilate":
+                renderer.updater["ctr"] = 0
+                renderer.updater["f"] = float(cmds[1])
+            elif cmds[0] == "shear":
+                renderer.updater["ctr"] = 0
+                renderer.updater["a"] = cmds[1]
+                renderer.updater["f"] = float(cmds[2])
             elif cmds[0] == "custom": self.custom(cmds[1:])
+			# custom isn't yet animated
             elif cmds[0] == "reset": self.reset()
-            elif cmds[0] == "stretch": self.stretch(cmds[1], cmds[2])
+            elif cmds[0] == "stretch":
+                renderer.updater["ctr"] = 0
+                renderer.updater["a"] = cmds[1]
+                renderer.updater["f"] = float(cmds[2])
             elif cmds[0] == "reflect": self.reflect(cmds[1])
-            elif cmds[0] == "translate": self.translate(cmds[1:])
-            elif cmds[0] == "rotate": self.rotate(cmds[1], cmds[2], cmds[3:])
+			# reflect isn't yet animated, i.e. how? the function only has x/y/z/-z param
+            elif cmds[0] == "translate":
+                renderer.updater["ctr"] = 0
+                renderer.updater["f1"] = float(cmds[1])
+                renderer.updater["f2"] = float(cmds[2])
+                try:
+                    renderer.updater["f3"] = float(cmds[3])
+                except IndexError:
+                    renderer.updater["f3"] = 0.0
+            elif cmds[0] == "rotate":
+                renderer.updater["ctr"] = 0
+                renderer.updater["f"] = float(cmds[1])
+                renderer.updater["a"] = cmds[2]
+                renderer.updater["f1"] = float(cmds[3])
+                renderer.updater["f2"] = float(cmds[4])
+                try:
+                    renderer.updater["f3"] = float(cmds[5])
+                except IndexError:
+                    renderer.updater["f3"] = 0.0
             elif cmds[0] == "3D": renderer.Sample3DModel()
             elif (cmds[0] == 'a' or cmds[0] == 'A'): renderer.toggleAxes = 1-toggleAxes
             elif (cmds[0] == 'v' or cmds[0] == 'V'): renderer.toggleValues = 1-toggleValues

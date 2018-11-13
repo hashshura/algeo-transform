@@ -28,7 +28,10 @@ class Renderer:
             "ctr": 60,
             "op": "",
             "a": "", # axis
-            "f": 0 # float, can be [x,y,z] for translation
+            "f": 0, # float
+            "f1": 0, # could be for xyz
+            "f2": 0,
+            "f3": 0
         }
         
     def UpdatePoints(self):
@@ -36,9 +39,32 @@ class Renderer:
             self.updater["ctr"] += 1
             if self.updater["op"] == "dilate":
                 self.shape.points = self.shape.points_before[:]
-                f = str(1 + ((self.updater["f"] - 1)/60 * self.updater["ctr"]))
-                self.shape.dilate(f)
-            
+                f = 1 + ((self.updater["f"] - 1)/60 * self.updater["ctr"])
+                self.shape.dilate(f1)
+            elif self.updater["op"] == "translate":
+                self.shape.points = self.shape.points_before[:]
+                f1 = self.updater["f1"]/60 * self.updater["ctr"]
+                f2 = self.updater["f2"]/60 * self.updater["ctr"]
+                f3 = self.updater["f3"]/60 * self.updater["ctr"]
+                self.shape.translate([f1, f2, f3])
+            elif self.updater["op"] == "rotate":
+                self.shape.points = self.shape.points_before[:]
+                f = self.updater["f"]/60 * self.updater["ctr"]
+                a = self.updater["a"]
+                f1 = self.updater["f1"]
+                f2 = self.updater["f2"]
+                f3 = self.updater["f3"]
+                self.shape.rotate(f, a, [f1, f2, f3])
+            elif self.updater["op"] == "shear":
+                self.shape.points = self.shape.points_before[:]
+                f = self.updater["f"]/60 * self.updater["ctr"]
+                a = self.updater["a"]
+                self.shape.shear(a, f)
+            elif self.updater["op"] == "stretch":
+                self.shape.points = self.shape.points_before[:]
+                f = 1 + ((self.updater["f"] - 1)/60 * self.updater["ctr"])
+                a = self.updater["a"]
+                self.shape.stretch(a, f)
 
     def InitGL(self, Width, Height):
         glClearColor(1, 1, 1, 0.0)
@@ -220,14 +246,7 @@ class Renderer:
         
         if args[0] == b'\r':
             self.cmds = self.cmd.split(" ")
-            
-            if self.cmds[0] == "dilate":
-                self.shape.points_before = self.shape.points[:]
-                self.updater["op"] = "dilate"
-                self.updater["ctr"] = 0
-                self.updater["f"] = float(self.cmds[1])
-            else:
-                self.shape.doCmd(self)
+            self.shape.doCmd(self)
             
             print("")
             self.cmd = ""

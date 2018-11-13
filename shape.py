@@ -206,17 +206,17 @@ class Shape:
                 except IndexError:
                     renderer.updater["f3"] = 0.0
             elif cmds[0] == "3D": renderer.Sample3DModel()
-            elif (cmds[0] == 'a' or cmds[0] == 'A'): renderer.toggleAxes = 1-toggleAxes
-            elif (cmds[0] == 'v' or cmds[0] == 'V'): renderer.toggleValues = 1-toggleValues
-            elif (cmds[0] == 'm' or cmds[0] == 'M'): renderer.toggleMode = 1-toggleMode
+            elif (cmds[0] == 'a' or cmds[0] == 'A'): renderer.toggleAxes = 1 - renderer.toggleAxes
+            elif (cmds[0] == 'v' or cmds[0] == 'V'): renderer.toggleValues = 1 - renderer.toggleValues
+            elif (cmds[0] == 'm' or cmds[0] == 'M'): renderer.toggleMode = 1 - renderer.toggleMode
             # Change field of view angle
             elif cmds[0] == '-': renderer.fov -= 1
             elif cmds[0] == '+': renderer.fov += 1
             # Change dimensions
             elif cmds[0] == 'D': renderer.dim += 0.1
             elif cmds[0] == 'd' and renderer.dim > 1: renderer.dim -= 0.1
-            else: print("\nCommand !found")
+            else: print("\nCommand not found.")
         except IndexError:
-            print("\nPlease input the correct number of parameters!")
+            print("\nPlease input the correct number of parameters.")
         except ValueError:
-            print("\nPlease input valid values!")
+            print("\nPlease input valid values.")

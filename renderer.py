@@ -40,7 +40,7 @@ class Renderer:
             if self.updater["op"] == "dilate":
                 self.shape.points = self.shape.points_before[:]
                 f = 1 + ((self.updater["f"] - 1)/60 * self.updater["ctr"])
-                self.shape.dilate(f1)
+                self.shape.dilate(f)
             elif self.updater["op"] == "translate":
                 self.shape.points = self.shape.points_before[:]
                 f1 = self.updater["f1"]/60 * self.updater["ctr"]
@@ -222,7 +222,8 @@ class Renderer:
             self.DrawPolygon()
         elif (self.dimension == "3D"):
             self.Sample3DModel()
-        self.DrawAxes()
+        if (self.toggleAxes == 1):
+            self.DrawAxes()
         self.InitGL(1080,720)
         glutPostRedisplay()
         

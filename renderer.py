@@ -279,6 +279,6 @@ class Renderer:
         glutIdleFunc(self.DrawGLScene)
         glutReshapeFunc(self.ReSizeGLScene)
         glutKeyboardFunc(self.keyPressed)
-        glutSpecialFunc(self.keySpecial)
-        #InitGL(1080, 720)
+        if self.dimension == "3D":
+            glutSpecialFunc(self.keySpecial)
         glutMainLoop()

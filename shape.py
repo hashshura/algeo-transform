@@ -39,9 +39,9 @@ class Shape:
             num = point[:]
             if (param == 'x'):
                 num[0] += value*num[1] + value*num[2]
-            if (param == 'y'):
+            elif (param == 'y'):
                 num[1] += value*num[0] + value*num[2]
-            if (param == 'z'):
+            elif (param == 'z'):
                 num[2] += value*num[0] + value*num[1]
             newpoints += [[num[0], num[1], num[2]]]
         self.points = newpoints

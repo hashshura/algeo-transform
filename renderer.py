@@ -18,8 +18,8 @@ class Renderer:
         self.window = 0
         self.dim = 3.0
         self.toggleAxes = 1
-        self.toggleValues = 1
-        self.toggleMode = 0
+        #self.toggleValues = 1
+        #self.toggleMode = 0
         self.th = 0.0
         self.ph = 0.0
         self.fov = 55
@@ -69,11 +69,8 @@ class Renderer:
         glShadeModel(GL_SMOOTH)           
         glMatrixMode(GL_PROJECTION)
         glLoadIdentity()
-        if (self.toggleMode):                   
-            gluPerspective(self.fov,float(Width)/float(Height), self.dim/4, 2*Z_PERSPECTIVE_TR)
-        else:
-            specialhere = self.dim*300
-            glOrtho(-specialhere*float(Width)/float(Height), +specialhere*float(Width)/float(Height),-specialhere,+specialhere, -specialhere, +specialhere)
+        specialhere = self.dim*300
+        glOrtho(-specialhere*float(Width)/float(Height), +specialhere*float(Width)/float(Height),-specialhere,+specialhere, -specialhere, +specialhere)
 
         glMatrixMode(GL_MODELVIEW)
         glLoadIdentity()
@@ -226,15 +223,16 @@ class Renderer:
         glEnable(GL_DEPTH_TEST) 
 
         glLoadIdentity()
-        
+        '''
         if (self.toggleMode):
             Ex = -2*self.dim*math.sin(self.th)*math.cos(self.ph)
             Ey = +(2*self.dim*math.sin(self.ph))
             Ez = +(2*self.dim*math.sin(self.th)*math.cos(self.ph))
             gluLookAt(Ex,Ey,Ez , 0,0,0 , 0,math.cos(self.ph),0)
         else:
-            glRotatef(self.ph,1,0,0) # Change perspective
-            glRotatef(self.th,0,1,0) # Change perspective
+        '''
+        glRotatef(self.ph,1,0,0) # Change perspective
+        glRotatef(self.th,0,1,0) # Change perspective
             
         if (self.dimension == "2D"):
             self.DrawPolygon()

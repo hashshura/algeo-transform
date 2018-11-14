@@ -216,9 +216,7 @@ class Shape:
             elif cmds[0] == "add": self.addPoint(cmds[1:])
             elif cmds[0] == "reset": self.reset()
             #elif cmds[0] == "help": showCmds()
-            elif (cmds[0] == 'a' or cmds[0] == 'A'): renderer.toggleAxes = 1 - renderer.toggleAxes
-            elif (cmds[0] == 'v' or cmds[0] == 'V'): renderer.toggleValues = 1 - renderer.toggleValues
-            elif (cmds[0] == 'm' or cmds[0] == 'M'): renderer.toggleMode = 1 - renderer.toggleMode
+            elif cmds[0] == "A": renderer.toggleAxes = (renderer.toggleAxes+1)%2
             # Change field of view angle
             elif cmds[0] == '-': renderer.fov -= 1
             elif cmds[0] == '+': renderer.fov += 1

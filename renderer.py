@@ -90,33 +90,37 @@ class Renderer:
 
     def DrawAxes(self):
         #Draw XY Cartesian Area
+        glLineWidth(1)
         glBegin(GL_LINES)
         
         for i in range(-40,40):
-            #XY    
             glColor3f(0.7,0.7,0.7)
-            if (i != 0):
-                if (i%5 == 0):
-                    glColor3f(0,0,0)
-                glVertex3f(2000,i*50,0)
-                glVertex3f(-2000,i*50,0)
-            if (i != 0):
-                if (i%5 == 0):
-                    glColor3f(0,0,0)
-                glVertex3f(i*50,-2000,0)
-                glVertex3f(i*50,2000,0)
+            #XY    
+            if (self.dimension == "2D"):
+                if (i != 0):
+                    if (i%5 == 0):
+                        glColor3f(0,0,0)
+                    glVertex3f(2000,i*50,0)
+                    glVertex3f(-2000,i*50,0)
+                if (i != 0):
+                    if (i%5 == 0):
+                        glColor3f(0,0,0)
+                    glVertex3f(i*50,-2000,0)
+                    glVertex3f(i*50,2000,0)
             #XZ
-            if (i != 0):
-                if (i%5 == 0):
-                    glColor3f(0,0,0)
-                glVertex3f(2000,0,i*50)
-                glVertex3f(-2000,0,i*50)
-            if (i != 0):
-                if (i%5 == 0):
-                    glColor3f(0,0,0)
-                glVertex3f(i*50,0,-2000)
-                glVertex3f(i*50,0,2000)
+            if (self.dimension == "3D"):
+                if (i != 0):
+                    if (i%5 == 0):
+                        glColor3f(0,0,0)
+                    glVertex3f(2000,0,i*50)
+                    glVertex3f(-2000,0,i*50)
+                if (i != 0):
+                    if (i%5 == 0):
+                        glColor3f(0,0,0)
+                    glVertex3f(i*50,0,-2000)
+                    glVertex3f(i*50,0,2000)
             #YZ
+            '''
             if (i != 0):
                 if (i%5 == 0):
                     glColor3f(0,0,0)
@@ -127,20 +131,41 @@ class Renderer:
                     glColor3f(0,0,0)
                 glVertex3f(0,i*50,-2000)
                 glVertex3f(0,i*50,2000)
-        
+            '''
+        glEnd()
+        glLineWidth(3)
+        glBegin(GL_LINES)
         glColor3f(0,1,0)
         glVertex3f(2000,0,0)
-        glVertex3f(-2000,0,0)
+        glVertex3f(0,0,0)
 
         glColor3f(1,0,0)
         glVertex3f(0,2000,0)
-        glVertex3f(0,-200,0)
+        glVertex3f(0,0,0)
 
-        glColor3f(0,0,1)
-        glVertex3f(0,0,2000)
-        glVertex3f(0,0,-2000)
-
+        if (self.dimension == "3D"):
+            glColor3f(0,0,1)
+            glVertex3f(0,0,2000)
+            glVertex3f(0,0,0)
         glEnd()
+        #Sumbu Negatif
+        glLineStipple(5, 0xAAAA)
+        glEnable(GL_LINE_STIPPLE)
+        glBegin(GL_LINES)
+        glColor3f(0,1,0)
+        glVertex3f(-2000,0,0)
+        glVertex3f(0,0,0)
+
+        glColor3f(1,0,0)
+        glVertex3f(0,-2000,0)
+        glVertex3f(0,0,0)
+
+        if(self.dimension == "3D"):
+            glColor3f(0,0,1)
+            glVertex3f(0,0,-2000)
+            glVertex3f(0,0,0)
+        glEnd()
+        glDisable(GL_LINE_STIPPLE)
 
     def DrawPolygon(self):
         glBegin(GL_POLYGON)

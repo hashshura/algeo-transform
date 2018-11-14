@@ -144,17 +144,17 @@ class Shape:
         for point in self.points:
             newpoint = point[:]
             if (param == 'x'):
-                newpoint[0] = point[0] - a
-                newpoint[1] = (point[1] - b)*math.cos(rad) - (point[2] - c)*math.sin(rad)
-                newpoint[2] = (point[1] - b)*math.sin(rad) + (point[2] - c)*math.cos(rad)
+                newpoint[0] = point[0]
+                newpoint[1] = b + (point[1] - b)*math.cos(rad) - (point[2] - c)*math.sin(rad)
+                newpoint[2] = c + (point[1] - b)*math.sin(rad) + (point[2] - c)*math.cos(rad)
             elif (param == 'y'):
-                newpoint[0] = (point[0] - a)*math.cos(rad) + (point[2] - c)*math.sin(rad)
-                newpoint[1] = point[1] - b
-                newpoint[2] = -1*(point[0] - a)*math.sin(rad) + (point[1] - b)*math.cos(rad)
+                newpoint[0] = a + (point[0] - a)*math.cos(rad) + (point[2] - c)*math.sin(rad)
+                newpoint[1] = point[1]
+                newpoint[2] = c + -1*(point[0] - a)*math.sin(rad) + (point[1] - b)*math.cos(rad)
             elif (param == 'z'):
-                newpoint[0] = (point[0] - a)*math.cos(rad) - (point[1] - b)*math.sin(rad)
-                newpoint[1] = (point[0] - a)*math.sin(rad) + (point[1] - b)*math.cos(rad)
-                newpoint[2] = point[2] - c
+                newpoint[0] = a + (point[0] - a)*math.cos(rad) - (point[1] - b)*math.sin(rad)
+                newpoint[1] = b + (point[0] - a)*math.sin(rad) + (point[1] - b)*math.cos(rad)
+                newpoint[2] = point[2]
             newpoints += [newpoint]
         self.points = newpoints
         
@@ -198,13 +198,18 @@ class Shape:
             elif cmds[0] == "rotate":
                 renderer.updater["ctr"] = 0
                 renderer.updater["f"] = float(cmds[1])
-                renderer.updater["a"] = cmds[2]
-                renderer.updater["f1"] = float(cmds[3])
-                renderer.updater["f2"] = float(cmds[4])
                 try:
-                    renderer.updater["f3"] = float(cmds[5])
-                except IndexError:
+                    # 2D
+                    renderer.updater["a"] = "z"
+                    renderer.updater["f1"] = float(cmds[2])
+                    renderer.updater["f2"] = float(cmds[3])
                     renderer.updater["f3"] = 0.0
+                except TypeError:
+                    # 3D
+                    renderer.updater["a"] = float(cmds[2])
+                    renderer.updater["f1"] = float(cmds[3])
+                    renderer.updater["f2"] = float(cmds[4])
+                    renderer.updater["f3"] = float(cmds[5])
             elif cmds[0] == "3D": renderer.Sample3DModel()
             elif (cmds[0] == 'a' or cmds[0] == 'A'): renderer.toggleAxes = 1 - renderer.toggleAxes
             elif (cmds[0] == 'v' or cmds[0] == 'V'): renderer.toggleValues = 1 - renderer.toggleValues

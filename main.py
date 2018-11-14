@@ -24,7 +24,7 @@ def showCmds():
     print(" Type \"stretch p v\" to stretch the polygon (p = x/y/z) (v = float)")
     print(" Type \"reflect p\" to reflect the polygon (p = x/x=-y/etc)")
     print(" Type \"translate dx dy dz\" to translate the polygon (dx,dy,dz = float)")
-    print(" Type \"rotate r p a b\" or \"rotate r p a b c\" to rotate the polygon (r = float) (p = x/y/z) (a,b,c = float)")
+    print(" Type \"rotate r a b\" (2D) or \"rotate r p a b c\" (3D) to rotate the polygon (r = float) (p = x/y/z) (a,b,c = central)")
     print(" Type \"custom a b c d\" (2x2) or \"custom a b c d e f g h i\" (3x3) to execute custom transformation matrix")
     print()
     print("Make sure that your mouse pointer focus is on the GLUT window.")

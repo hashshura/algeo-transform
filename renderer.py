@@ -215,8 +215,8 @@ class Renderer:
             Ez = +(2*self.dim*math.sin(self.th)*math.cos(self.ph))
             gluLookAt(Ex,Ey,Ez , 0,0,0 , 0,math.cos(self.ph),0)
         else:
-            glRotatef(self.ph,1,0,0)
-            glRotatef(self.th,0,1,0)
+            glRotatef(self.ph,1,0,0) # Change perspective
+            glRotatef(self.th,0,1,0) # Change perspective
             
         if (self.dimension == "2D"):
             self.DrawPolygon()

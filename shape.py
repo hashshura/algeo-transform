@@ -118,6 +118,12 @@ class Shape:
                 num[0] = -num[1]
                 num[1] = swap
                 num[2] = -num[2]
+            elif (param == "xy") or (param == "yx"):
+                num[2] = -num[2]
+            elif (param == "xz") or (param == "zx"):
+                num[1] = -num[1]
+            elif (param == "yz") or (param == "zy"):
+                num[0] = -num[0]
             else:
                 num[0] = float(param[0])*2 - num[0]
                 num[1] = float(param[1])*2 - num[1]
@@ -168,6 +174,51 @@ class Shape:
             newpoints += [newpoint]
         self.points = newpoints
         
+    def help(self,command):
+        print("================================???? HELPER ????================================")
+        print()
+        if (command == "dilate") or (command == "Dilate"):
+            print(" Type \"dilate v\" to scale the polygon (v = float)")
+        elif (command == "shear") or (command == "Shear"):
+            print(" for 2D")
+            print(" Type \"shear p v\" to shear the polygon (p = x/y) (v = float)")
+            print(" for 3D")
+            print(" Type \"shear p v\" to shear the polygon (p = x/y/z) (v = float)")
+        elif (command == "stretch") or (command == "Stretch"):
+            print(" for 2D")
+            print(" Type \"stretch p v\" to stretch the polygon (p = x/y) (v = float)")
+            print(" for 3D")
+            print(" Type \"stretch p v\" to stretch the polygon (p = x/y/z) (v = float)")
+        elif (command == "reflect") or (command == "Reflect"):
+            print(" Type \"reflect p\" to reflect the polygon (p = x/x=-y/etc)")
+        elif (command == "translate") or (command == "Translate"):
+            print(" for 2D")
+            print(" Type \"translate dx dy\" to translate the polygon (dx,dy = float)")
+            print(" for 3D")
+            print(" Type \"translate dx dy dz\" to translate the polygon (dx,dy,dz = float)")
+        elif (command == "rotate") or (command == "Rotate"):
+            print(" for 2D")
+            print(" Type \"rotate r a b\" to rotate the polygon (r = float) (a,b = central point)")
+            print(" for 3D")
+            print(" Type \"rotate r p a b c\" to rotate the polygon (r = float) (p = x/y/z) (a,b,c = central point)")
+        elif (command == "custom") or (command == "Custom"):
+            print(" for 2D")
+            print(" Type \"custom a b c d\" to execute custom transformation matrix (a,b,c,d is a 2x2 matrix)")
+            print(" for 3D")
+            print(" Type \"custom a b c d e f g h i\" to execute custom transformation matrix (a-i is a 3x3 matrix")
+        else:
+            print(" Command not found!")
+            print(" Please type \"help <command's name>\"")
+            print(" Command's List:")
+            print(" -dilate")
+            print(" -shear")
+            print(" -stretch")
+            print(" -reflect")
+            print(" -translate")
+            print(" -rotate")
+            print(" -custom")
+        print("================================================================================")
+    
     def doCmd(self, renderer):
         #cmds[0] = kata pertama
         #cmds[1] = kata kedua, dst
@@ -215,7 +266,7 @@ class Shape:
             elif cmds[0] == "del": self.delPoint()
             elif cmds[0] == "add": self.addPoint(cmds[1:])
             elif cmds[0] == "reset": self.reset()
-            #elif cmds[0] == "help": showCmds()
+            elif cmds[0] == "help": self.help(cmds[1])
             elif cmds[0] == "A": renderer.toggleAxes = (renderer.toggleAxes+1)%2
             # Change field of view angle
             elif cmds[0] == '-': renderer.fov -= 1

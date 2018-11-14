@@ -204,9 +204,9 @@ class Shape:
                     renderer.updater["f1"] = float(cmds[2])
                     renderer.updater["f2"] = float(cmds[3])
                     renderer.updater["f3"] = 0.0
-                except TypeError:
+                except ValueError:
                     # 3D
-                    renderer.updater["a"] = float(cmds[2])
+                    renderer.updater["a"] = cmds[2]
                     renderer.updater["f1"] = float(cmds[3])
                     renderer.updater["f2"] = float(cmds[4])
                     renderer.updater["f3"] = float(cmds[5])

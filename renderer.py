@@ -275,11 +275,13 @@ class Renderer:
         glutPostRedisplay()
 
     def keySpecial(self, key, x, y):
-        if (key == GLUT_KEY_RIGHT): self.th += 5
-        elif (key == GLUT_KEY_LEFT): self.th -= 5
-        elif (key == GLUT_KEY_UP): self.ph += 5
-        elif (key == GLUT_KEY_DOWN): self.ph -= 5
-
+        if (self.dimension == "3D"):
+            if (key == GLUT_KEY_RIGHT): self.th += 5
+            elif (key == GLUT_KEY_LEFT): self.th -= 5
+            elif (key == GLUT_KEY_UP): self.ph += 5
+            elif (key == GLUT_KEY_DOWN): self.ph -= 5
+        if ((key == GLUT_KEY_PAGE_DOWN) and (self.dim > 1)): self.dim -= 0.25
+        elif ((key == GLUT_KEY_PAGE_UP) and (self.dim < 7.5)): self.dim += 0.25
         self.th = self.th%360
         self.ph = self.ph%360
 
@@ -297,6 +299,5 @@ class Renderer:
         glutIdleFunc(self.DrawGLScene)
         glutReshapeFunc(self.ReSizeGLScene)
         glutKeyboardFunc(self.keyPressed)
-        if self.dimension == "3D":
-            glutSpecialFunc(self.keySpecial)
+        glutSpecialFunc(self.keySpecial)
         glutMainLoop()

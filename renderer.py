@@ -6,6 +6,7 @@ import math
 
 # To translate into viewport perspective
 Z_PERSPECTIVE_TR = -2000.0
+ANIMATION_DURATION = 1
 
 class Renderer:
 
@@ -25,46 +26,38 @@ class Renderer:
         self.cmd = ""
         
         self.updater = {
-            "ctr": 60,
+            "ctr": 1e9,
             "op": "",
             "a": "", # axis
             "f": 0, # float
             "f1": 0, # could be for xyz
             "f2": 0,
-            "f3": 0
+            "f3": 0,
+            "deltas": []
         }
         
     def Animate(self):
-        if self.updater["ctr"] < 60:
+        frames = 60 * ANIMATION_DURATION
+        if self.updater["ctr"] < frames:
             self.updater["ctr"] += 1
-            if self.updater["op"] == "dilate":
+            if self.updater["op"] == "rotate":
                 self.shape.points = self.shape.points_before[:]
-                f = 1 + ((self.updater["f"] - 1)/60 * self.updater["ctr"])
-                self.shape.dilate(f)
-            elif self.updater["op"] == "translate":
-                self.shape.points = self.shape.points_before[:]
-                f1 = self.updater["f1"]/60 * self.updater["ctr"]
-                f2 = self.updater["f2"]/60 * self.updater["ctr"]
-                f3 = self.updater["f3"]/60 * self.updater["ctr"]
-                self.shape.translate([f1, f2, f3])
-            elif self.updater["op"] == "rotate":
-                self.shape.points = self.shape.points_before[:]
-                f = self.updater["f"]/60 * self.updater["ctr"]
+                f = self.updater["f"]/frames * self.updater["ctr"]
                 a = self.updater["a"]
                 f1 = self.updater["f1"]
                 f2 = self.updater["f2"]
                 f3 = self.updater["f3"]
                 self.shape.rotate(f, a, [f1, f2, f3])
-            elif self.updater["op"] == "shear":
-                self.shape.points = self.shape.points_before[:]
-                f = self.updater["f"]/60 * self.updater["ctr"]
-                a = self.updater["a"]
-                self.shape.shear(a, f)
-            elif self.updater["op"] == "stretch":
-                self.shape.points = self.shape.points_before[:]
-                f = 1 + ((self.updater["f"] - 1)/60 * self.updater["ctr"])
-                a = self.updater["a"]
-                self.shape.stretch(a, f)
+            else:
+                self.shape.points = []
+                it = 0
+                for pt_d in self.updater["deltas"]:
+                    pt = self.shape.points_before[it][:]
+                    pt[0] += pt_d[0]/frames * self.updater["ctr"]
+                    pt[1] += pt_d[1]/frames * self.updater["ctr"]
+                    pt[2] += pt_d[2]/frames * self.updater["ctr"]
+                    self.shape.points += [pt]
+                    it += 1
 
     def InitGL(self, Width, Height):
         glClearColor(1, 1, 1, 0.0)

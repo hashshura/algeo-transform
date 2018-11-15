@@ -217,6 +217,7 @@ class Shape:
             print(" -translate")
             print(" -rotate")
             print(" -custom")
+        print()
         print("================================================================================")
     
     def doCmd(self, renderer):
@@ -267,10 +268,7 @@ class Shape:
             elif cmds[0] == "add": self.addPoint(cmds[1:])
             elif cmds[0] == "reset": self.reset()
             elif cmds[0] == "help": self.help(cmds[1])
-            elif cmds[0] == "A": renderer.toggleAxes = (renderer.toggleAxes+1)%2
-            # Change field of view angle
-            elif cmds[0] == '-': renderer.fov -= 1
-            elif cmds[0] == '+': renderer.fov += 1
+            elif (cmds[0] == "A") or (cmds[0] == "a"): renderer.toggleAxes = (renderer.toggleAxes+1)%2
             else: print("\nCommand not found.")
         except IndexError:
             print("\nPlease input the correct number of parameters.")

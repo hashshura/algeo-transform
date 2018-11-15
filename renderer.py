@@ -18,11 +18,8 @@ class Renderer:
         self.window = 0
         self.dim = 3.0
         self.toggleAxes = 1
-        #self.toggleValues = 1
-        #self.toggleMode = 0
-        self.th = 0.0
-        self.ph = 0.0
-        self.fov = 55
+        self.th = 45.0
+        self.ph = 30.0
         self.cmd = ""
         
         self.updater = {
@@ -89,7 +86,7 @@ class Renderer:
         #Draw XY Cartesian Area
         glLineWidth(1)
         glBegin(GL_LINES)
-        
+        #DrawGrid
         for i in range(-40,40):
             glColor3f(0.7,0.7,0.7)
             #XY    
@@ -167,7 +164,7 @@ class Renderer:
     def DrawPolygon(self):
         glBegin(GL_POLYGON)
         for point in self.shape.points:
-            glColor3f(0.4,0.4,1)
+            glColor3f(0,0,1)
             glVertex3f(point[0], point[1], point[2])
         glEnd()
 
@@ -223,14 +220,9 @@ class Renderer:
         glEnable(GL_DEPTH_TEST) 
 
         glLoadIdentity()
-        '''
-        if (self.toggleMode):
-            Ex = -2*self.dim*math.sin(self.th)*math.cos(self.ph)
-            Ey = +(2*self.dim*math.sin(self.ph))
-            Ez = +(2*self.dim*math.sin(self.th)*math.cos(self.ph))
-            gluLookAt(Ex,Ey,Ez , 0,0,0 , 0,math.cos(self.ph),0)
-        else:
-        '''
+        if (self.dimension == "2D"):
+            self.ph = 0
+            self.th = 0
         glRotatef(self.ph,1,0,0) # Change perspective
         glRotatef(self.th,0,1,0) # Change perspective
             

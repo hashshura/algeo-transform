@@ -252,7 +252,7 @@ class Shape:
                 elif cmds[0] == "stretch": s.stretch(cmds[1], cmds[2])
                 elif cmds[0] == "reflect": s.reflect(cmds[1])
                 elif cmds[0] == "translate": s.translate(cmds[1:])
-                elif cmds[0] == "custom": s.shear(cmds[1:])
+                elif cmds[0] == "custom": s.custom(cmds[1:])
                 if cmds[0] != "rotate":
                     for b,a in zip(self.points, s.points):
                         delta_point = a[:]

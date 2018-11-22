@@ -1,4 +1,4 @@
-# algeo-polygon-transformation (f.m.a. *chillax*)
+# polygon-transform (f.m.a. *chillax*)
 
 An application made with Python to input vertices and run operations to the resulted polygon.
 Done to fulfill IF2123 Geometric Algebra's Big Mission (or whatever Tugas Besar is called).

@@ -1,11 +1,11 @@
 # polygon-transform (f.m.a. *chillax*)
 
-An application made with Python to input vertices and run operations to the resulted polygon.
+An application made with Python to input vertices and run transformation operations to the resulted polygon.
 Done to fulfill IF2123 Geometric Algebra's Big Mission (or whatever Tugas Besar is called).
 
 ## Installation and Running
 * Make sure that Python 3.7 is already installed on your computer
-* To install the dependencies, execute:
+* To install the dependencies (win32 python), execute:
 ``` bash
 chillax> python dep\get-pip.py 
 chillax> pip install dep\PyOpenGL-3.1.2-cp37-cp37m-win32.whl 

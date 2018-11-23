@@ -11,12 +11,12 @@ TRANSFORM_CMDS = [
 ]
 
 class Shape:
-    
+
     def __init__(self):
         self.points = []
         self.points_backup = []
         self.points_before = []
-        
+
     def addPoint(self, point):
         newpoint = []
         newpoint = newpoint + [float(point[0])]
@@ -25,7 +25,7 @@ class Shape:
             newpoint = newpoint + [float(point[2])]
         except IndexError:
             newpoint = newpoint + [0]
-        
+
         self.points = self.points + [newpoint]
         self.points_backup = self.points[:]
 
@@ -41,7 +41,7 @@ class Shape:
                 newpoint += [number * float(multiplier)]
             newpoints += [newpoint]
         self.points = newpoints
-        
+
     def shear(self, param, value):
         value = float(value)
         newpoints = []
@@ -55,7 +55,7 @@ class Shape:
                 num[2] += value*num[0] + value*num[1]
             newpoints += [[num[0], num[1], num[2]]]
         self.points = newpoints
-        
+
     def custom(self, matrix):
         newpoints = []
         try:
@@ -166,14 +166,14 @@ class Shape:
             elif (param == 'y'):
                 newpoint[0] = a + (point[0] - a)*math.cos(rad) + (point[2] - c)*math.sin(rad)
                 newpoint[1] = point[1]
-                newpoint[2] = c + -1*(point[0] - a)*math.sin(rad) + (point[1] - b)*math.cos(rad)
+                newpoint[2] = c + -1*(point[0] - a)*math.sin(rad) + (point[2] - c)*math.cos(rad)
             elif (param == 'z'):
                 newpoint[0] = a + (point[0] - a)*math.cos(rad) - (point[1] - b)*math.sin(rad)
                 newpoint[1] = b + (point[0] - a)*math.sin(rad) + (point[1] - b)*math.cos(rad)
                 newpoint[2] = point[2]
             newpoints += [newpoint]
         self.points = newpoints
-        
+
     def help(self,command):
         print("================================???? HELPER ????================================")
         print()
@@ -219,7 +219,7 @@ class Shape:
             print(" -custom")
         print()
         print("================================================================================")
-    
+
     def doCmd(self, renderer):
         #cmds[0] = kata pertama
         #cmds[1] = kata kedua, dst
@@ -260,7 +260,7 @@ class Shape:
                         delta_point[1] -= b[1]
                         delta_point[2] -= b[2]
                         renderer.updater["deltas"] += [delta_point]
-            
+
             elif cmds[0] == "exit": exit()
             elif cmds[0] == "stop": exit()
             elif cmds[0] == "quit": exit()
